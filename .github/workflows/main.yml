@@ -75,7 +75,7 @@ jobs:
           publish_branch: main
           publish_dir: allure-history
           destination_dir: docs/allure-report
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4  
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
