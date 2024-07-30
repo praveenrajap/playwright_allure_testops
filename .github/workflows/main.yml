@@ -6,15 +6,16 @@ permissions:
   contents: read
       
 jobs: 
-  Windows-latest:
-    runs-on: windows-latest
+  ubuntu-latest:
+    runs-on: ubuntu-latest
     steps:
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: OIDC Login to Azure Public Cloud with AzPowershell (enableAzPSSession true)
+
+      - name: Login to Azure Public Cloud
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -22,43 +23,38 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: true
                   
-      - name: 'Get resource group with PowerShell action'   
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            Get-AzResourceGroup
-          azPSVersion: "latest"
-          
-   
-      - name: install vsts
-        run:  npm install -g vsts-npm-auth
+      - name: Get resource group with Azure CLI
+        run: az group list
+
+      - name: Install vsts
+        run: npm install -g vsts-npm-auth
+
       - name: Use .npmrc   
         uses: bduff9/use-npmrc@v1.2
         with:
           dot-npmrc: ${{ secrets.DOT_NPMRC }}
-      - name: Install npm  
+
+      - name: Install npm packages
         run: npm install
+
       - name: Install dependencies
         run: npm ci
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Azure PSDT Feed         
         run: |
-              
-                echo "Y" | npm init -y @azure/microsoft-playwright-testing-private-preview
+          echo "Y" | npm init -y @azure/microsoft-playwright-testing-private-preview
+
       - name: Run Playwright tests        
         run: npx playwright test -c playwright.service.config.ts --reporter=allure-playwright
         env:
-            PLAYWRIGHT_SERVICE_URL: ${{ secrets.PLAYWRIGHT_SERVICE_URL }}  
+          PLAYWRIGHT_SERVICE_URL: ${{ secrets.PLAYWRIGHT_SERVICE_URL }}
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-   
-      
-     
-
-      
-        
