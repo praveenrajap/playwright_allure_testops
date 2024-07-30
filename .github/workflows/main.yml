@@ -56,7 +56,7 @@ jobs:
         if: always()
         continue-on-error: true
         with:
-          ref: allure_report_test
+          ref: main
           path: allure_report_test
 
       - name: Build test report
@@ -74,6 +74,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: main
           publish_dir: allure-history
+          destination_dir: docs/allure-report
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
