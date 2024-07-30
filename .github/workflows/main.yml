@@ -29,18 +29,19 @@ jobs:
             Get-AzResourceGroup
           azPSVersion: "latest"
           
-      - name: Install npm  
-        run: npm install
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+   
       - name: install vsts
         run:  npm install -g vsts-npm-auth
       - name: Use .npmrc   
         uses: bduff9/use-npmrc@v1.2
         with:
           dot-npmrc: ${{ secrets.DOT_NPMRC }}
+      - name: Install npm  
+        run: npm install
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
       - name: Azure PSDT Feed         
         run: |
               
