@@ -74,7 +74,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: main
           publish_dir: allure-history
-          destination_dir: allure-report
+          
+
+      
       
       # - uses: actions/upload-artifact@v4  
       #   if: ${{ !cancelled() }}
