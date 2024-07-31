@@ -1,16 +1,16 @@
 name: Run tests
-
+on: [push] 
 permissions:
   id-token: write
   contents: write
 
-on: [push]
-  # workflow_dispatch:
-  #   inputs:
-  #     ALLURE_JOB_RUN_ID:
-  #       description: ALLURE_JOB_RUN_ID service parameter. Leave blank.
-  #     ALLURE_USERNAME:
-  #       description: ALLURE_USERNAME service parameter. Leave blank.
+# on: [push]
+#   # workflow_dispatch:
+#   #   inputs:
+#   #     ALLURE_JOB_RUN_ID:
+#   #       description: ALLURE_JOB_RUN_ID service parameter. Leave blank.
+#   #     ALLURE_USERNAME:
+#   #       description: ALLURE_USERNAME service parameter. Leave blank.
 
 env:
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
@@ -23,8 +23,6 @@ jobs:
   all-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
