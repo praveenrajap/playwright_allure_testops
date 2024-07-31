@@ -689,6 +689,10 @@ test.describe('Cart Management Tests', () => {
 
   test('Complete a purchase [Allure Step]', async ({ page }) => {
     await allure.tags("NewUI", "Essentials");
+    await allure.severity(allure.Severity.CRITICAL);
+    await allure.epic("Web interface");
+  await allure.feature("Essential features");
+  await allure.story("Authentication");
     await page.fill('#user-name', 'standard_user');
     await page.fill('#password', 'secret_sauce');
     await allure.step('Login to inventory', async () => {
