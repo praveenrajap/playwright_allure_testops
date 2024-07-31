@@ -54,7 +54,7 @@ jobs:
       - name: Use .npmrc   
         uses: bduff9/use-npmrc@v1.2
         with:
-          dot-npmrc: ${{ secrets.DOT_NPMRC }}
+          dot-npmrc: ${{ secrets.DOT_NPMRC }}    
 
       - name: Install npm packages
         run: npm install
